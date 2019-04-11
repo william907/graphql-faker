@@ -1,9 +1,20 @@
-FROM node:8.8.1-alpine
+FROM node
 
-ENTRYPOINT ["node", "/usr/local/bin/graphql-faker"]
 WORKDIR /workdir
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
 
 EXPOSE 9002
 
-RUN yarn global add graphql-faker && \
-    yarn cache clean --force
+RUN cd /workdir
+CMD [ "npm", "start" ]
