@@ -132,6 +132,10 @@ export function fakeSchema(schema: GraphQLSchema) {
   }
 
   function getResolver(type:GraphQLOutputType, field) {
+    // Temporary solution for returning null on field 'error'
+    if (field.name === 'error')
+      return () => null;
+
     if (type instanceof GraphQLNonNull)
       return getResolver(type.ofType, field);
     if (type instanceof GraphQLList)
