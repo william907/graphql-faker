@@ -10,11 +10,7 @@ COPY package*.json ./
 RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
-
 # Bundle app source
 COPY . .
 
 EXPOSE 9002
-
-RUN cd /workdir
-CMD [ "npm", "start" ]
